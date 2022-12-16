@@ -114,25 +114,24 @@ class Heap {
       while (minHeap.size()) {
         const [vertex, cost] = minHeap.poll();
 
-        if (intensity[vertex] < cost) {
+        if (intensity[vertex] < cost) { // 이미 최소일때
           continue;
         }
 
-        if (isSummits[vertex]) {
+        if (isSummits[vertex]) { // 정상일 때
           continue;
         }
 
-        const adjList = hikingTrail[vertex];
-        const adjListLen = adjList.length;
-
-        for (let i = 0; i < adjListLen; i++) {
-          const [nextVertex, nextCost] = adjList[i];
-
-          if (intensity[nextVertex] > Math.max(intensity[vertex], nextCost)) {
-            intensity[nextVertex] = Math.max(intensity[vertex], nextCost);
-            minHeap.add([nextVertex, intensity[nextVertex]]);
-          }
+        const nextNodes = hikingTrail[vertex] || []
+        
+        for (let [nextVertex, nextCost] of nextNodes) {
+            const max = Math.max(intensity[vertex], nextCost)
+            if (intensity[nextVertex] > max) {
+                intensity[nextVertex] = max;
+                minHeap.add([nextVertex, max]);
+            }        
         }
+          
       }
 
       return intensity;
