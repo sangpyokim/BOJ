@@ -77,13 +77,17 @@ for (let [x, y, w] of list) {
   graph[y].push([x, w])
 }
 
-const a = helper(1, q) + helper(q, w) + helper(w, N)
-const b = helper(1, w) + helper(w, q) + helper(q, N)
+const a = helper(1)
+const b = helper(q)
+const c = helper(w)
 
-if (a === Infinity && b === Infinity) return console.log(-1)
-else return console.log(Math.min(a,b))
+const route1 = a[q] + b[w] + c[N]
+const route2 = a[w] + c[q] + b[N]
 
-function helper(s, t) {
+if (route1 === Infinity && route2 === Infinity) return console.log(-1)
+else return console.log(Math.min(route1,route2))
+
+function helper(s) {
   const pq = new PriorityQ()
   const dist = new Array(N+1).fill(Infinity)
 
@@ -104,5 +108,5 @@ function helper(s, t) {
       }
     }
   }
-  return dist[t]
+  return dist
 }
