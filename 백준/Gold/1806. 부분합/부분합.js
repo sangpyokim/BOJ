@@ -7,13 +7,18 @@ const list = input[0].split(' ').map(Number)
 
 const table = []
 table[0] = list[0]
+let startIndex = 0
+let answer = Infinity
 for (let i = 1; i < N; i++) {
   table[i] = list[i] + table[i - 1]
+  if (table[i] >= target) {
+    answer = Math.min(answer, i+1)
+  }
 }
 
-let answer = Infinity
-for (let startIndex = 0; startIndex < N; startIndex++) {
+for (startIndex; startIndex < N; startIndex++) {
   const cur = table[startIndex]
+
 
   for (let j = startIndex; j >= 0; j--) {
     const prev = table[j]
@@ -31,3 +36,4 @@ for (let startIndex = 0; startIndex < N; startIndex++) {
   }
 }
 console.log(answer > N ? 0 : answer)
+
