@@ -4,22 +4,17 @@ const input = fs.readFileSync(filePath).toString().trim().split("\n");
 
 const N = +input.shift()
 const list = input.map(l => l.split(' ').map(Number))
+const start = list[0]
+let sum = 0
 
-const solution = () => {
-  const [startX, startY] = list[0];
+for (let i = 2; i < N; i++) {
+  const cur = list[i]
+  const prev = list[i - 1]
+  
+  const a = (cur[0] - start[0]) * (prev[1] - start[1])
+  const b = (cur[1] - start[1]) * (prev[0] - start[0])
+  
+  sum += (a-b)
+}
 
-  const getTri = (a, b) => {
-    const [ax, ay] = a;
-    const [bx, by] = b;
-    return (ax - startX) * (by - startY) - (ay - startY) * (bx - startX);
-  };
-
-  let ans = 0;
-  for (let i = 2; i < N; i++) {
-    ans += getTri(list[i], list[i - 1]);
-  }
-
-  return (Math.abs(ans) * 0.5).toFixed(1);
-};
-
-console.log(solution())
+console.log(Math.abs(sum / 2).toFixed(1))
