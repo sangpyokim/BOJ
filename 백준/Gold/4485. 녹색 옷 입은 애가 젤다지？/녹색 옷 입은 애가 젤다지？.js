@@ -125,10 +125,8 @@ function solution(N, list) {
         }
       }
     }
-
-    res = dist[N-1][N-1]
   }
-  return res
+  return dist[N-1][N-1]
 }
 
 
