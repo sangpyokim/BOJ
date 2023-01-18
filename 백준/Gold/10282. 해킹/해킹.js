@@ -28,49 +28,42 @@ class PriorityQueue {
   }
 
   dequeue() {
-    const max = this.arr[0]
-    const end = this.arr.pop()
+    const res = this.arr[0]
+    const tail = this.arr.pop()
     const len = this.arr.length
 
-    if (len === 0) return max || null
-    
-    // 내려가기
-    this.arr[0] = end
-    let index = 0
-    const elem = this.arr[index]
+    if (len === 0) return res
 
-    while (1) {
-      let leftChildIndex = 2 * index + 1
-      let rightChildIndex = 2 * index + 2
-      let leftChild = null
-      let rightChild = null
+    this.arr[0] = tail
+    let index = 0
+    const cur = this.arr[index]
+
+    while (true) {
+      const leftChildIndex = index*2 + 1
+      const rightChildIndex = index*2 + 2
+
+      if (rightChildIndex >= len) break;
+
+      let leftChild = this.arr[leftChildIndex]
+      let rightChild = this.arr[rightChildIndex]
       let swap = null
 
-      // 왼쪽자식
-      if (leftChildIndex < len) {
-        leftChild = this.arr[leftChildIndex]
-        // 왼쪽 자식이 top보다 더 커버리면 swap에 임시저장
-        if (leftChild.weight < elem.weight) {
-          swap = leftChildIndex
-        }
+
+      if (leftChild.weight < cur.weight) {
+        swap = leftChildIndex
       }
 
-      // 오른쪽자식
-      if (rightChildIndex < len) {
-        rightChild = this.arr[rightChildIndex]
-        // 오른쪽자식이 top보다 크고, 왼쪽자식보다 크면 swap을 변경 시켜줌
-        if (rightChild.weight < elem.weight && rightChild.weight < leftChild.weight) {
-          swap = rightChildIndex
-        }
+      if (rightChild.weight < cur.weight && rightChild.weight < leftChild.weight) {
+        swap = rightChildIndex
       }
 
-      if (swap === null) break;
+      if (!swap) break;
 
-      [this.arr[index], this.arr[swap]] = [this.arr[swap], elem]
+      [ this.arr[index], this.arr[swap] ] = [this.arr[swap], cur]
       index = swap
     }
 
-    return max
+    return res
   }
 
 }
