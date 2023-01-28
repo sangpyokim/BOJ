@@ -2,33 +2,35 @@ const fs = require('fs');
 const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
 const input = fs.readFileSync(filePath).toString().trim().split("\n");
 
-const K = +input.shift()
+const N = +input.shift()
 const list = input.map(l => l.split(' ').map(Number))
 // ----------------------------
 // 각 리프노드의 레벨 수를 더해서 홀수면 이김.
+const graph = Array.from({ length: N + 1 }, () => new Array())
+const visited = new Array(N + 1).fill(0)
 
-const visited = new Array(K + 1).fill(0);
-const adjArr = Array.from({ length: K + 1 }, () => new Array());
-list.forEach((el) => {
-  const [from, to] = el;
-  adjArr[from].push(to);
-  adjArr[to].push(from);
-});
-let answer = 0;
-const dfs = (node, depth) => {
-  if (node !== 1 && adjArr[node].length === 1) {
-    if (depth % 2 === 1) answer += 1;
-    return;
+for (let [x, y] of list) {
+  graph[x].push(y)
+  graph[y].push(x)
+}
+
+let count = 0
+visited[1] = true
+dfs(0, 1)
+console.log(count % 2 === 1 ? "Yes" : "No")
+
+function dfs(L, cur) {
+  if (cur !== 1 && graph[cur].length === 1) { // 리프노드일때
+    if (L % 2=== 1) count++ // 레벨을 더해줌
+    return
   }
+  
+  visited[cur] = 1
 
-  visited[node] = 1;
-
-  for (let i = 0; i < adjArr[node].length; i++) {
-    if (!visited[adjArr[node][i]]) {
-      dfs(adjArr[node][i], depth + 1);
+  const nextNodes = graph[cur]
+  for (let nextNode of nextNodes) {
+    if (!visited[nextNode]) {
+      dfs(L + 1, nextNode)
     }
   }
-};
-
-dfs(1, 0);
-answer % 2 === 1 ? console.log("Yes") : console.log("No");
+}
