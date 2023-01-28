@@ -10,11 +10,9 @@ let left = 0, right = Math.max(...list)
 let answer = 0
 
 while (left < right) {
-  const mid = Math.floor((right + left) / 2) // 나무 자를 높이
+  const mid = (right + left) >>> 1
 
-  const res = getTree(mid) // 나무의 개수
-
-  // if (left === right) return console.log(left)
+  const res = getTree(mid) 
 
   if (res < M) {
     right = mid
@@ -31,7 +29,7 @@ function getTree(mid) {
 
   for (let num of list) {
     const sum = num - mid
-    if (sum >= 0n) res += sum 
+    if (sum >= 0) res += sum 
   }
 
   return res
