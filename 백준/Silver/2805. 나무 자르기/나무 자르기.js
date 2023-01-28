@@ -14,7 +14,7 @@ while (left < right) {
 
   const res = getTree(mid) // 나무의 개수
 
-  if (left === right) return console.log(left)
+  // if (left === right) return console.log(left)
 
   if (res < M) {
     right = mid
