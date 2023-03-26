@@ -1,28 +1,22 @@
-let fs = require('fs');
+const fs = require('fs');
 const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
 const input = fs.readFileSync(filePath).toString().trim().split("\n");
-const n = +input.shift()
-const nums = input[0].split(' ').map(Number)
 
-const dp = Array.from({length: n+1}, () => 0)
-dp[0] = 1
-let res = 1
+const N = +input.shift()
+const list = input.shift().split(' ').map(Number)
 
-for (let i = 1; i < n; i++) {
-  const cur = nums[i]
-  
-  // 작은 적들중에서 제일 큰거
-  let j = i - 1
-  let maxIndex = 0
-  while (j >= 0) {
-    const prev = nums[j]
-    if (cur > prev) {
-      
-      maxIndex = Math.max(maxIndex, dp[j])
+const dp = new Array(N).fill(0)
+let answer = 0
+
+for (let i = 0; i < N; i++) {
+  dp[i] = 1
+  for (let j = 0; j < i; j++) {
+    if (list[i] > list[j]) {
+      dp[i] = Math.max(dp[i], dp[j] + 1)
     }
-    j -= 1
   }
-  dp[i] = 1 + maxIndex
-  res = Math.max(res, dp[i])
+  answer = Math.max(answer, dp[i])
+
 }
-console.log(res)
+
+console.log(answer)
