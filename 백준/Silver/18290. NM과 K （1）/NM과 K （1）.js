@@ -13,17 +13,17 @@ const solution = () => {
 
     let answer = -Infinity
 
-    helper(0, 0)
+    helper(0, 0, 0)
 
     console.log(answer)
 
-    function helper(L, sum) {
+    function helper(L, sum, index) {
         if (L === K) {
             answer = Math.max(answer, sum)
             return
         }
         
-        for (let i = 0; i < N; i++) {
+        for (let i = index; i < N; i++) {
             for (let j = 0; j < M; j++) {
                 if (selected[i][j]) continue
 
@@ -40,7 +40,7 @@ const solution = () => {
 
                 selected[i][j] = true
 
-                helper(L+1, sum + A[i][j])
+                helper(L+1, sum + A[i][j], i)
                 
                 selected[i][j] = false
 
