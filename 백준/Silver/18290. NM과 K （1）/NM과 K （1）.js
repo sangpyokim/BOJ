@@ -32,7 +32,10 @@ const solution = () => {
                     const dx = i + x
                     const dy = j + y
                     if (isVal(dx, dy)) {
-                        if (selected[dx][dy]) flag = false
+                        if (selected[dx][dy]) {
+                            flag = false
+                            break
+                        }
                     }
                 }                
                 
