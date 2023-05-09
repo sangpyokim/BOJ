@@ -15,13 +15,17 @@ function solution() {
   const res = prime(1000000)
 
   for (let x of list) {
+    if (x === 0) continue
+    
+    let flag = false
     for (let i = 3; i < x; i++) {
       if (res[i] && res[x - i]) {
         answer += `${x} = ${i} + ${x - i}` + '\n'
+        flag = true
         break;
       }
-        
     }
+    if (!flag) answer += `Goldbach's conjecture is wrong.` + '\n'
   }  
 }
 
