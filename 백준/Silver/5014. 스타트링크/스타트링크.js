@@ -9,8 +9,8 @@ const solution = () => {
   const dir = [U, -D]
   const isVal = x => x >= 1 && x <= F
 
-  const set = new Set()
-  set.add(S)
+  const set = []
+  set[S] = true
 
   while (q.length) {
     const temp = []
@@ -21,8 +21,8 @@ const solution = () => {
       for (let x of dir) {
         const dx = cur + x
 
-        if (isVal(dx) && !set.has(dx)) {
-          set.add(dx)
+        if (isVal(dx) && !set[dx]) {
+          set[dx] = true
           temp.push(dx)
         }
       }
