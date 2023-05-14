@@ -2,8 +2,8 @@ let fs = require('fs');
 const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
 const input = fs.readFileSync(filePath).toString().trim().split("\n");
 const N = +input.shift()
-const dist = input[0].split(' ').map(BigInt)
-const oil = input[1].split(' ').map(BigInt)
+const dist = input[0].split(' ').map(Number)
+const oil = input[1].split(' ').map(Number)
 
 
 let sumCost = oil[0] * dist[0]
@@ -19,11 +19,11 @@ while (curDist < N-1) {
     prevCost = curCost
   }
 
-  sumCost += prevCost * nextDist
+  sumCost += prevCost * nextDist || 0
 
 
   curDist += 1
 }
-console.log(String(sumCost))
+console.log(sumCost)
 
 // 현재보다 싼 주유소가 나올때까지 사면되네
